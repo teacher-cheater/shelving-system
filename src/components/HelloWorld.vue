@@ -56,117 +56,7 @@
         </div>
       </div>
       <div class="main__cards">
-        <div class="main__card product-card">
-          <div class="product-card__label">Скидка</div>
-          <div class="product-card__image">
-            <!-- <img src="./icons/img.jpeg" alt="product" /> -->
-          </div>
-          <div class="product-card__info">
-            <p class="product-card__article">L422WH</p>
-            <p class="product-card__title">Ручка дверная</p>
-            <div class="product-card__footer">
-              <div class="product-card__prices">
-                <p class="product-card__sale">400₽</p>
-                <p class="product-card__price">355₽</p>
-              </div>
-              <div class="product-card__icons-choice">
-                <button type="button">
-                  <!-- <img src="./icons/cart.svg" alt="cart" /> -->
-                </button>
-                <button type="button">
-                  <!-- <img src="./icons/add-cart.svg" alt="cart" /> -->
-                </button>
-                <button type="button">
-                  <!-- <img src="./icons/like-empty.svg" alt="like" /> -->
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="main__card product-card">
-          <div class="product-card__label">Скидка</div>
-          <div class="product-card__image">
-            <!-- <img src="./icons/img.jpeg" alt="product" /> -->
-          </div>
-          <div class="product-card__info">
-            <p class="product-card__article">L422WH</p>
-            <p class="product-card__title">Ручка дверная</p>
-            <div class="product-card__footer">
-              <div class="product-card__prices">
-                <p class="product-card__sale">400₽</p>
-                <p class="product-card__price">355₽</p>
-              </div>
-              <div class="product-card__icons-choice">
-                <button type="button">
-                  <!-- <img src="./icons/cart.svg" alt="cart" /> -->
-                </button>
-                <button type="button">
-                  <!-- <img src="./icons/add-cart.svg" alt="cart" /> -->
-                </button>
-                <button type="button">
-                  <!-- <img src="./icons/like-empty.svg" alt="like" /> -->
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="main__card product-card">
-          <div class="product-card__label">Скидка</div>
-          <div class="product-card__image">
-            <!-- <img src="./icons/img.jpeg" alt="product" /> -->
-          </div>
-          <div class="product-card__info">
-            <p class="product-card__article">L422WH</p>
-            <p class="product-card__title">Ручка дверная</p>
-            <div class="product-card__footer">
-              <div class="product-card__prices">
-                <p class="product-card__sale">400₽</p>
-                <p class="product-card__price">355₽</p>
-              </div>
-              <div class="product-card__icons-choice">
-                <button type="button">
-                  <!-- <img src="./icons/cart.svg" alt="cart" /> -->
-                </button>
-                <button type="button">
-                  <!-- <img src="./icons/add-cart.svg" alt="cart" /> -->
-                </button>
-                <button type="button">
-                  <!-- <img src="./icons/like-empty.svg" alt="like" /> -->
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="main__card product-card">
-          <div class="product-card__label">Скидка</div>
-          <div class="product-card__image">
-            <!-- <img src="./icons/img.jpeg" alt="product" /> -->
-          </div>
-          <div class="product-card__info">
-            <p class="product-card__article">L422WH</p>
-            <p class="product-card__title">Ручка дверная</p>
-            <div class="product-card__footer">
-              <div class="product-card__prices">
-                <p class="product-card__sale">400₽</p>
-                <p class="product-card__price">355₽</p>
-              </div>
-              <div class="product-card__icons-choice">
-                <button type="button">
-                  <!-- <img src="./icons/cart.svg" alt="cart" /> -->
-                </button>
-                <button type="button">
-                  <!-- <img src="./icons/add-cart.svg" alt="cart" /> -->
-                </button>
-                <button type="button">
-                  <!-- <img src="./icons/like-empty.svg" alt="like" /> -->
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ProductCard v-for="item in items" :key="item.id" :product="item" />
       </div>
     </div>
   </main>
@@ -174,58 +64,23 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import items from "../data/items.json";
+import ProductCard from "./ProductCard.vue";
 
 export default defineComponent({
   name: "HelloWorld",
-  props: {
-    msg: String,
+  components: {
+    ProductCard,
+  },
+  data() {
+    return {
+      items,
+    };
   },
 });
 </script>
 
 <style scoped>
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-li {
-  list-style: none;
-}
-
-a,
-a:visited {
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: inherit;
-  font-size: inherit;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-html {
-  font-size: 16px;
-}
-
 .header__container {
   padding: 32px 15px;
 }
@@ -387,90 +242,5 @@ html {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(329px, 1fr));
   grid-gap: 48px;
-}
-
-.product-card {
-  border: 1px solid rgb(210, 210, 210);
-  position: relative;
-
-  height: 352px;
-  overflow: hidden;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.product-card:hover {
-  transform: scale(1.035, 1.035);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-}
-
-.product-card__label {
-  position: absolute;
-  top: 8px;
-  left: 0.4px;
-  background: rgb(235, 87, 87);
-  color: rgb(255, 255, 255);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 130%;
-  padding: 3px 15px;
-}
-
-.product-card__image {
-  padding: 9px 49px;
-  width: 238px;
-  height: 237px;
-}
-
-.product-card__info {
-  padding: 9px 12px;
-}
-
-.product-card__article {
-  color: rgb(136, 136, 136);
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 140%;
-  margin-bottom: 6px;
-}
-
-.product-card__title {
-  color: rgb(0, 0, 0);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
-  margin-bottom: 9px;
-}
-
-.product-card__footer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.product-card__prices {
-  display: flex;
-  gap: 9px;
-}
-
-.product-card__sale {
-  color: rgb(136, 136, 136);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
-  text-decoration-line: line-through;
-}
-
-.product-card__price {
-}
-
-.product-card__icons-choice {
-  display: flex;
-  gap: 27px;
-}
-
-.product-card__icons-choice button {
-  background: transparent;
-  cursor: pointer;
 }
 </style>
