@@ -184,11 +184,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* @font-face {
-  font-family: "SF Pro Display";
-  src: url("./fonts/SF-Pro-Display-Regular.otf") format("opentype");
-} */
-
 *,
 *::before,
 *::after {
@@ -225,19 +220,10 @@ h6 {
 html,
 body {
   height: 100%;
-  /* font-family: "SF Pro Display"; */
 }
 
 html {
   font-size: 16px;
-}
-
-.header {
-}
-
-[class*="__container"] {
-  max-width: 1490px;
-  margin: 0px auto;
 }
 
 .header__container {
@@ -275,7 +261,6 @@ html {
 
 .main__header-block h1 {
   color: rgb(0, 0, 0);
-  /* font-family: "SF Pro Display"; */
   font-size: 36px;
   font-weight: 600;
   line-height: 48px;
