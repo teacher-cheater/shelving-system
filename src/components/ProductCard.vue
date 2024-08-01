@@ -19,10 +19,21 @@
             <img src="../assets/icons/cart.svg" alt="cart" />
           </button>
           <button type="button">
-            <img src="../assets/icons/add-cart.svg" alt="cart" />
+            <img src="../assets/icons/add-cart.svg" alt="add-cart" />
           </button>
           <button type="button">
-            <img src="../assets/icons/like-empty.svg" alt="cart" />
+            <img
+              class="product-card__like"
+              src="../assets/icons/like-empty.svg"
+              alt="like"
+            />
+          </button>
+          <button type="button">
+            <img
+              class="product-card__like"
+              src="../assets/icons/like.svg"
+              alt="like"
+            />
           </button>
         </div>
       </div>
@@ -146,5 +157,9 @@ export default defineComponent({
 .product-card__icons-choice button {
   background: transparent;
   cursor: pointer;
+}
+.product-card__icons-choice button img {
+  width: 21.6px;
+  height: 21.6px;
 }
 </style>

@@ -16,45 +16,21 @@
       <div class="main__header-block">
         <h1>Комплекты стеллажных систем</h1>
         <div class="main__right-block select">
-          <!-- кастомная сортировка элементов -->
-          <div class="select__form-group dropdown-items">
-            <div class="dropdown-items__content dropdown">
-              <span>Сортировать по:</span>
-              <button class="dropdown-items__btn">Цена по возрастанию</button>
-              <ul class="dropdown-items__list">
-                <li class="dropdown-items__item arr-top">
-                  Цена по возрастанию
-                </li>
-                <li class="dropdown-items__item arr-down">Цена по убыванию</li>
-              </ul>
-            </div>
-          </div>
-          <!-- кастомная сортировка элементов -->
-          <div class="select__form-group dropdown-items">
-            <div class="dropdown-items__content dropdown">
-              <span>Материал</span>
-              <button class="dropdown-items__btn dropdown-items__btn--active">
-                Металл
-              </button>
-              <ul class="dropdown-items__list">
-                <li
-                  class="dropdown-items__item arr-top"
-                  data-value="material-steel"
-                >
-                  Металл
-                </li>
-                <li
-                  class="dropdown-items__item arr-down"
-                  data-value="material-tree"
-                >
-                  Дерево
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!--  -->
+          <Dropdown
+            label="Сортировать по:"
+            :items="sortOptions"
+            defaultText="Цена по возрастанию"
+            @update:selected="sortItems"
+          />
+          <Dropdown
+            label="Материал"
+            :items="materialOptions"
+            defaultText="Металл"
+            @update:selected="filterByMaterial"
+          />
         </div>
       </div>
+
       <div class="main__cards">
         <ProductCard v-for="item in items" :key="item.id" :product="item" />
       </div>
@@ -63,18 +39,71 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import items from "../data/items.json";
 import ProductCard from "./ProductCard.vue";
+import Dropdown from "./Dropdown.vue";
 
 export default defineComponent({
   name: "HelloWorld",
   components: {
     ProductCard,
+    Dropdown,
   },
-  data() {
+  setup() {
+    const sortOptions = ref(["Цена по возрастанию", "Цена по убыванию"]);
+    const materialOptions = ref(["Металл", "Дерево"]);
+    const selectedSort = ref("");
+    const selectedMaterial = ref("");
+    const itemsList = ref(items);
+
+    const sortItems = (sortOption: string) => {
+      selectedSort.value = sortOption;
+    };
+
+    const filterByMaterial = (materialOption: string) => {
+      selectedMaterial.value = materialOption;
+    };
+
+    const filteredItems = computed(() => {
+      let filtered = itemsList.value;
+
+      if (selectedMaterial.value === "Металл") {
+        filtered = filtered.filter(
+          (item: { material: number }) => item.material === 2
+        );
+      } else if (selectedMaterial.value === "Дерево") {
+        filtered = filtered.filter(
+          (item: { material: number }) => item.material === 1
+        );
+      }
+
+      if (selectedSort.value === "Цена по возрастанию") {
+        filtered.sort(
+          (
+            a: { price: { current_price: number } },
+            b: { price: { current_price: number } }
+          ) => a.price.current_price - b.price.current_price
+        );
+      } else if (selectedSort.value === "Цена по убыванию") {
+        filtered.sort(
+          (
+            a: { price: { current_price: number } },
+            b: { price: { current_price: number } }
+          ) => b.price.current_price - a.price.current_price
+        );
+      }
+
+      return filtered;
+    });
+
     return {
       items,
+      sortOptions,
+      materialOptions,
+      sortItems,
+      filterByMaterial,
+      filteredItems,
     };
   },
 });
