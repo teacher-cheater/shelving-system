@@ -15,24 +15,26 @@
           <p class="product-card__price">{{ product.price.current_price }}₽</p>
         </div>
         <div class="product-card__icons-choice">
-          <button type="button">
-            <img src="../assets/icons/cart.svg" alt="cart" />
-          </button>
-          <button type="button">
-            <img src="../assets/icons/add-cart.svg" alt="add-cart" />
-          </button>
-          <button type="button">
+          <button @click="toggleCart" type="button">
             <img
-              class="product-card__like"
-              src="../assets/icons/like-empty.svg"
-              alt="like"
+              v-if="isInCart"
+              src="../assets/icons/add-cart.svg"
+              alt="add-cart"
             />
+            <img v-else src="../assets/icons/cart.svg" alt="cart" />
           </button>
-          <button type="button">
+          <button @click="toggleFavorites" type="button">
             <img
+              v-if="isInProduct"
               class="product-card__like"
               src="../assets/icons/like.svg"
               alt="like"
+            />
+            <img
+              v-else
+              class="product-card__like"
+              src="../assets/icons/like-empty.svg"
+              alt="empty-like"
             />
           </button>
         </div>
@@ -42,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 
 interface Price {
   old_price: number | null;
@@ -69,6 +71,45 @@ export default defineComponent({
       type: Object as PropType<Item>,
       required: true,
     },
+  },
+  setup(props) {
+    const isInCart = ref(false);
+    const isInProduct = ref(false);
+
+    const toggleCart = () => {
+      isInCart.value = !isInCart.value;
+      isInCart.value ? addToCart(props.product) : removeFromCart(props.product);
+    };
+
+    const addToCart = (product: Item) => {
+      console.log(`Товар ${product.name} добавлен в корзину.`);
+    };
+
+    const removeFromCart = (product: Item) => {
+      console.log(`Товар ${product.name} удален из корзину.`);
+    };
+
+    const toggleFavorites = () => {
+      isInProduct.value = !isInProduct.value;
+      isInProduct.value
+        ? addToFavorites(props.product)
+        : removeToFavorites(props.product);
+    };
+
+    const addToFavorites = (product: Item) => {
+      console.log(`Товар ${product.name} добавлен в избранное.`);
+    };
+
+    const removeToFavorites = (product: Item) => {
+      console.log(`Товар ${product.name} удален из избранного.`);
+    };
+
+    return {
+      isInCart,
+      isInProduct,
+      toggleCart,
+      toggleFavorites,
+    };
   },
 });
 </script>

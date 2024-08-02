@@ -41,7 +41,7 @@ import DropdownList from "./DropdownList.vue";
 import BreadCrumbs from "./BreadCrumbs.vue";
 
 export default defineComponent({
-  name: "HelloWorld",
+  name: "ProductListing",
   components: {
     BreadCrumbs,
     ProductCard,
