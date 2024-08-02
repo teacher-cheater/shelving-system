@@ -2,7 +2,7 @@
   <div class="main__card product-card">
     <div v-if="product.price.old_price" class="product-card__label">Скидка</div>
     <div class="product-card__image">
-      <!-- <img :src="product.image.url" :alt="product.name" /> -->
+      <img :src="product.image.url" :alt="product.name" />
     </div>
     <div class="product-card__info">
       <p class="product-card__article">{{ product.code }}</p>
@@ -25,7 +25,7 @@
           </button>
           <button @click="toggleFavorites" type="button">
             <img
-              v-if="isInProduct"
+              v-if="isFavorite"
               class="product-card__like"
               src="../assets/icons/like.svg"
               alt="like"
@@ -52,7 +52,7 @@ interface Price {
 }
 
 interface Image {
-  url: string | null;
+  url: string | undefined;
 }
 
 interface Item {
@@ -74,48 +74,36 @@ export default defineComponent({
   },
   setup(props) {
     const isInCart = ref(false);
-    const isInProduct = ref(false);
+    const isFavorite = ref(false);
 
     onMounted(() => {
-      if (localStorage.getItem(`favorite-${props.product.id}`)) {
-        isInProduct.value = true;
-      }
-      if (localStorage.getItem(`addCart-${props.product.id}`)) {
-        isInCart.value = true;
-      }
+      isFavorite.value = checkLocalStorage(`favorite-${props.product.id}`);
+      isInCart.value = checkLocalStorage(`cart-${props.product.id}`);
     });
+
+    const checkLocalStorage = (key: string): boolean => {
+      return localStorage.getItem(key) !== null;
+    };
 
     const toggleCart = () => {
       isInCart.value = !isInCart.value;
-      isInCart.value ? addToCart(props.product) : removeFromCart(props.product);
-    };
-
-    const addToCart = (product: Item) => {
-      localStorage.setItem(`addCart-${product.id}`, product.name);
-    };
-
-    const removeFromCart = (product: Item) => {
-      localStorage.removeItem(`addCart-${product.id}`);
+      updateLocalStorage(`cart-${props.product.id}`, isInCart.value);
     };
 
     const toggleFavorites = () => {
-      isInProduct.value = !isInProduct.value;
-      isInProduct.value
-        ? addToFavorites(props.product)
-        : removeToFavorites(props.product);
+      isFavorite.value = !isFavorite.value;
+      updateLocalStorage(`favorite-${props.product.id}`, isFavorite.value);
     };
 
-    const addToFavorites = (product: Item) => {
-      localStorage.setItem(`favorite-${product.id}`, product.name);
-    };
-
-    const removeToFavorites = (product: Item) => {
-      localStorage.removeItem(`favorite-${product.id}`);
+    const updateLocalStorage = (key: string, isActive: boolean) => {
+      isActive
+        ? localStorage.setItem(key, props.product.name)
+        : localStorage.removeItem(key);
     };
 
     return {
       isInCart,
-      isInProduct,
+      isFavorite,
       toggleCart,
       toggleFavorites,
     };
@@ -134,11 +122,6 @@ export default defineComponent({
   grid-template-rows: 1fr 1fr;
   transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-
-/* .product-card:hover {
-  transform: scale(1.035, 1.035);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-} */
 
 .product-card__label {
   position: absolute;
