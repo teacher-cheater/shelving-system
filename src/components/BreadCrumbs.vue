@@ -8,7 +8,7 @@
   </nav>
 </template>
 
-<style>
+<style scoped>
 .breadcrumb ol {
   display: flex;
   row-gap: 10px;

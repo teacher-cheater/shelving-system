@@ -26,7 +26,7 @@
       </div>
 
       <div class="main__cards">
-        <ProductCard v-for="item in items" :key="item.id" :product="item" />
+        <ProductCard v-for="item in filteredItems" :key="item.id" :product="item" />
       </div>
     </div>
   </main>
@@ -35,6 +35,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import items from "../data/items.json";
+import materials from "../data/materials.json";
 import ProductCard from "./ProductCard.vue";
 import DropdownList from "./DropdownList.vue";
 import BreadCrumbs from "./BreadCrumbs.vue";
@@ -48,7 +49,7 @@ export default defineComponent({
   },
   setup() {
     const sortOptions = ref(["Цена по возрастанию", "Цена по убыванию"]);
-    const materialOptions = ref(["Металл", "Дерево"]);
+    const materialOptions = ref(materials.map(material => material.name));
     const selectedSort = ref("");
     const selectedMaterial = ref("");
     const itemsList = ref(items);
@@ -129,105 +130,6 @@ export default defineComponent({
   display: -ms-flexbox;
   display: flex;
   gap: 10px;
-}
-
-.dropdown-items__content {
-  position: relative;
-}
-
-.dropdown-items__content span {
-  display: flex;
-  color: rgb(79, 79, 79);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 150%;
-  letter-spacing: 3%;
-  text-align: left;
-  padding: 6px 16px;
-}
-
-.dropdown-items__btn {
-  position: relative;
-  display: block;
-  text-align: left;
-  min-width: 288px;
-  width: 100%;
-  background: #f2f2f2;
-  padding: 10px 16px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #000000;
-  cursor: pointer;
-}
-
-.dropdown-items__btn:hover {
-  -webkit-transition: all 0.4s ease-in 0s;
-  -o-transition: all 0.4s ease-in 0s;
-  transition: all 0.4s ease-in 0s;
-  -webkit-box-shadow: 1px 4px 4px rgba(54, 94, 125, 0.1);
-  box-shadow: 1px 4px 4px rgba(54, 94, 125, 0.1);
-}
-
-.dropdown-items__btn::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  /* background: url("./icons/chevron-bottom.svg") 0 0 / contain no-repeat; */
-  pointer-events: none;
-  z-index: 1;
-}
-
-.dropdown-items__btn:focus {
-  outline: none;
-  -webkit-box-shadow: 0px 0px 0px 3px rgba(54, 94, 125, 0.1);
-  box-shadow: 0px 0px 0px 3px rgba(54, 94, 125, 0.1);
-}
-
-.dropdown-items__list {
-  display: none;
-  position: absolute;
-  left: 0;
-  top: 75px;
-  padding: 10px;
-  background: #ffffff;
-  -webkit-box-shadow: 1px 4px 40px rgba(54, 94, 125, 0.1);
-  box-shadow: 1px 4px 40px rgba(54, 94, 125, 0.1);
-  overflow: hidden;
-  width: 100%;
-  z-index: 5;
-}
-
-.dropdown-items__item {
-  padding: 8px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 1.17;
-  color: #080534;
-  cursor: pointer;
-}
-
-.dropdown-items__item:hover {
-  background: #f3f6f8;
-}
-
-.dropdown-items__input {
-  display: none;
-}
-
-.dropdown-items__list--visible {
-  display: block;
-}
-
-.dropdown-items__btn--active {
-  outline: none;
-  -webkit-box-shadow: 0px 0px 0px 3px rgba(54, 94, 125, 0.1);
-  box-shadow: 0px 0px 0px 3px rgba(54, 94, 125, 0.1);
 }
 
 .main__cards {
