@@ -1,13 +1,7 @@
 <template>
   <header class="header">
     <div class="header__container">
-      <nav class="breadcrumb" aria-label="breadcrumb">
-        <ol>
-          <li><a href="/">Главная</a></li>
-          <li><a href="/storage-systems">Системы хранения</a></li>
-          <li aria-current="page">Комплекты стеллажных систем</li>
-        </ol>
-      </nav>
+      <BreadCrumbs />
     </div>
   </header>
 
@@ -16,13 +10,13 @@
       <div class="main__header-block">
         <h1>Комплекты стеллажных систем</h1>
         <div class="main__right-block select">
-          <Dropdown
+          <DropdownList
             label="Сортировать по:"
             :items="sortOptions"
             defaultText="Цена по возрастанию"
             @update:selected="sortItems"
           />
-          <Dropdown
+          <DropdownList
             label="Материал"
             :items="materialOptions"
             defaultText="Металл"
@@ -42,13 +36,15 @@
 import { computed, defineComponent, ref } from "vue";
 import items from "../data/items.json";
 import ProductCard from "./ProductCard.vue";
-import Dropdown from "./Dropdown.vue";
+import DropdownList from "./DropdownList.vue";
+import BreadCrumbs from "./BreadCrumbs.vue";
 
 export default defineComponent({
   name: "HelloWorld",
   components: {
+    BreadCrumbs,
     ProductCard,
-    Dropdown,
+    DropdownList,
   },
   setup() {
     const sortOptions = ref(["Цена по возрастанию", "Цена по убыванию"]);
@@ -114,31 +110,6 @@ export default defineComponent({
   padding: 32px 15px;
 }
 
-.breadcrumb ol {
-  display: flex;
-  gap: 30px;
-}
-
-.breadcrumb ol li {
-  position: relative;
-}
-
-.breadcrumb ol li a {
-  color: rgb(130, 130, 130);
-}
-
-.breadcrumb ol li:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  display: block;
-  top: 1px;
-  right: -17px;
-  width: 2px;
-  height: 95%;
-  background-color: rgb(130, 130, 130);
-  transform: rotate(19deg);
-}
-
 .main__container {
   padding: 0px 15px;
 }
@@ -158,13 +129,6 @@ export default defineComponent({
   display: -ms-flexbox;
   display: flex;
   gap: 10px;
-}
-
-@media (max-width: 800px) {
-  .main__right-block {
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-  }
 }
 
 .dropdown-items__content {
@@ -269,7 +233,27 @@ export default defineComponent({
 .main__cards {
   padding: 23px 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(329px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(336px, 1fr));
   grid-gap: 48px;
+}
+
+@media (max-width: 800px) {
+  .main__right-block {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .main__header-block h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 616px) {
+  .main__right-block {
+    justify-content: center;
+  }
+  .dropdown-items {
+    width: 100%;
+  }
 }
 </style>

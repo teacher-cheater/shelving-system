@@ -18,7 +18,7 @@ export default defineComponent({
 #app {
   font-family: "SF Pro Display", sans-serif;
   [class*="__container"] {
-    max-width: 1490px;
+    max-width: 1520px;
     margin: 0px auto;
   }
 }
