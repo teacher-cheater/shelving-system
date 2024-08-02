@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, onMounted, PropType, ref } from "vue";
 
 interface Price {
   old_price: number | null;
@@ -76,17 +76,27 @@ export default defineComponent({
     const isInCart = ref(false);
     const isInProduct = ref(false);
 
+    onMounted(() => {
+      if (localStorage.getItem(`favorite-${props.product.id}`)) {
+        console.log(`favorite-${props.product.id}`);
+        isInProduct.value = true;
+      }
+      if (localStorage.getItem(`addCart-${props.product.id}`)) {
+        isInCart.value = true;
+      }
+    });
+
     const toggleCart = () => {
       isInCart.value = !isInCart.value;
       isInCart.value ? addToCart(props.product) : removeFromCart(props.product);
     };
 
     const addToCart = (product: Item) => {
-      console.log(`Товар ${product.name} добавлен в корзину.`);
+      localStorage.setItem(`addCart-${product.id}`, product.name);
     };
 
     const removeFromCart = (product: Item) => {
-      console.log(`Товар ${product.name} удален из корзину.`);
+      localStorage.removeItem(`addCart-${product.id}`);
     };
 
     const toggleFavorites = () => {
@@ -97,11 +107,11 @@ export default defineComponent({
     };
 
     const addToFavorites = (product: Item) => {
-      console.log(`Товар ${product.name} добавлен в избранное.`);
+      localStorage.setItem(`favorite-${product.id}`, product.name);
     };
 
     const removeToFavorites = (product: Item) => {
-      console.log(`Товар ${product.name} удален из избранного.`);
+      localStorage.removeItem(`favorite-${product.id}`);
     };
 
     return {
