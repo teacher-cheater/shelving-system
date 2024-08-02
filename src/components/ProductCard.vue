@@ -78,7 +78,6 @@ export default defineComponent({
 
     onMounted(() => {
       if (localStorage.getItem(`favorite-${props.product.id}`)) {
-        console.log(`favorite-${props.product.id}`);
         isInProduct.value = true;
       }
       if (localStorage.getItem(`addCart-${props.product.id}`)) {
@@ -136,10 +135,10 @@ export default defineComponent({
   transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.product-card:hover {
+/* .product-card:hover {
   transform: scale(1.035, 1.035);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-}
+} */
 
 .product-card__label {
   position: absolute;
@@ -212,5 +211,17 @@ export default defineComponent({
 .product-card__icons-choice button img {
   width: 21.6px;
   height: 21.6px;
+}
+
+@media (hover: hover) {
+  .product-card:hover {
+    transform: scale(1.035, 1.035);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .product-card:active {
+    transform: scale(1.035, 1.035);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  }
 }
 </style>

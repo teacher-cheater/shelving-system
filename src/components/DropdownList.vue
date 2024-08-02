@@ -167,10 +167,6 @@ export default defineComponent({
   cursor: pointer;
 }
 
-.dropdown-items__item:hover {
-  background: #f3f6f8;
-}
-
 .dropdown-items__input {
   display: none;
 }
@@ -183,5 +179,14 @@ export default defineComponent({
   outline: none;
   -webkit-box-shadow: 0px 0px 0px 3px rgba(54, 94, 125, 0.1);
   box-shadow: 0px 0px 0px 3px rgba(54, 94, 125, 0.1);
+}
+@media (hover: hover) {
+  .dropdown-items__item:hover {
+    background: #f3f6f8;
+  }
+
+  .dropdown-items__item:active {
+    background: #f3f6f8;
+  }
 }
 </style>

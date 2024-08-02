@@ -26,7 +26,11 @@
       </div>
 
       <div class="main__cards">
-        <ProductCard v-for="item in filteredItems" :key="item.id" :product="item" />
+        <ProductCard
+          v-for="item in filteredItems"
+          :key="item.id"
+          :product="item"
+        />
       </div>
     </div>
   </main>
