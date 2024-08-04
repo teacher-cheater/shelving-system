@@ -179,9 +179,6 @@ export default defineComponent({
   text-decoration-line: line-through;
 }
 
-.product-card__price {
-}
-
 .product-card__icons-choice {
   display: flex;
   gap: 27px;
