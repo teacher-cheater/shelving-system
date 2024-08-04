@@ -137,8 +137,9 @@ export default defineComponent({
 
 .product-card__image {
   padding: 9px 49px;
-  width: 238px;
+  width: auto;
   height: 237px;
+  text-align: center;
 }
 
 .product-card__info {
